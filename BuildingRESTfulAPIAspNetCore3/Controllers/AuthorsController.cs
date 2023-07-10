@@ -20,15 +20,18 @@ namespace BuildingRESTfulAPIAspNetCore3.Web.Controllers
         [HttpGet]
         public IActionResult GetAuthors()
         {
-            var data = _authorRepository.GetAuthors();
-            return new JsonResult(data);
+            var dbAuthors = _authorRepository.GetAuthors();
+            return Ok(dbAuthors);
         }
 
         [HttpGet("{id:long}")]
         public IActionResult GetAuthorById(long id)
         {
-            var data = _authorRepository.GetAuthor(id);
-            return new JsonResult(data);
+            var dbAuthor = _authorRepository.GetAuthor(id);
+            if (dbAuthor == null)
+                return NotFound();
+
+            return Ok(dbAuthor);
         }
     }
 }
