@@ -11,7 +11,8 @@ namespace BuildingRESTfulAPIAspNetCore3.Web.Controllers
 
         public AuthorsController(IAuthorRepository authorRepository)
         {
-            _authorRepository = authorRepository;
+            _authorRepository = authorRepository
+                ?? throw new ArgumentNullException(nameof(authorRepository));
         }
 
 
@@ -20,6 +21,13 @@ namespace BuildingRESTfulAPIAspNetCore3.Web.Controllers
         public IActionResult GetAuthors()
         {
             var data = _authorRepository.GetAuthors();
+            return new JsonResult(data);
+        }
+
+        [HttpGet("{id:long}")]
+        public IActionResult GetAuthorById(long id)
+        {
+            var data = _authorRepository.GetAuthor(id);
             return new JsonResult(data);
         }
     }

@@ -33,7 +33,7 @@ if (app.Environment.IsDevelopment())
 //add authorization capabilities to the request pipeline, it must be configured in the DI.
 app.UseAuthorization();
 
-app.MapControllers();
+app.MapControllers();// api controller attribute routes
 
 app.Run();
 
