@@ -1,13 +1,20 @@
 using BuildingRESTfulAPIAspNetCore3.Infrastructure;
 using BuildingRESTfulAPIAspNetCore3.Infrastructure.Abstractions;
 using BuildingRESTfulAPIAspNetCore3.Infrastructure.Repositories;
+using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers();
+builder.Services.AddControllers(configure =>
+{
+    configure.ReturnHttpNotAcceptable = true;
+})
+    .AddXmlDataContractSerializerFormatters();
+
+
 //AddDbContextPool, reuse the db context for better performance.
 builder.Services.AddDbContextPool<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
